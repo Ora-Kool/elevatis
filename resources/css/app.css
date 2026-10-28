@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-nav: 'Cabin', ui-sans-serif, system-ui, sans-serif;
+
+    /* Elevatis brand palette (from the original site theme) */
+    --color-brand: #315581;
+    --color-brand-dark: #233f5c;
+    --color-brand-muted: #4b6981;
+    --color-ink: #1a222d;
+    --color-ink-soft: #263240;
+    --color-slate-brand: #324758;
+    --color-mist: #dee8f0;
+    --color-cloud: #f0f5f8;
+
+    --shadow-soft: 0 1px 2px rgb(26 34 45 / 0.04), 0 8px 24px -6px rgb(26 34 45 / 0.08);
+    --shadow-lift: 0 2px 4px rgb(26 34 45 / 0.04), 0 24px 48px -12px rgb(35 63 92 / 0.22);
+
+    --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold whitespace-nowrap transition duration-300 ease-out disabled:pointer-events-none disabled:opacity-60;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        @apply bg-white font-sans text-slate-brand;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply text-ink tracking-tight text-balance;
+    }
+
+    ::selection {
+        @apply bg-brand text-white;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-brand;
+    }
+}
+
+@layer components {
+    .container-site {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+    }
+
+    .section {
+        @apply py-20 sm:py-24 lg:py-28;
+    }
+
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-brand uppercase;
+    }
+
+    .eyebrow::before {
+        content: '';
+        @apply h-px w-8 bg-current;
+    }
+
+    .btn-primary {
+        @apply btn bg-brand text-white shadow-soft hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-lift;
+    }
+
+    .btn-secondary {
+        @apply btn border border-ink/15 bg-white text-ink hover:-translate-y-0.5 hover:border-brand hover:text-brand;
+    }
+
+    .btn-light {
+        @apply btn bg-white text-brand-dark hover:-translate-y-0.5 hover:bg-cloud;
+    }
+
+    .btn-ghost-light {
+        @apply btn border border-white/30 text-white hover:-translate-y-0.5 hover:border-white hover:bg-white/10;
+    }
+
+    .card {
+        @apply rounded-3xl border border-ink/5 bg-white p-8 shadow-soft transition duration-500 ease-out;
+    }
+
+    .field-label {
+        @apply mb-2 block text-sm font-medium text-ink;
+    }
+
+    .field {
+        @apply block w-full rounded-xl border border-ink/10 bg-cloud/60 px-4 py-3.5 text-ink placeholder:text-slate-brand/50 transition focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/10 focus:outline-none;
+    }
+
+    .field-error {
+        @apply mt-2 text-sm text-red-700;
+    }
+}
+
+.brand-mark {
+    mask: url('/images/elevatis-mark.png') center / contain no-repeat;
+}
+
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+.no-js [data-reveal] {
+    opacity: 1;
+    transform: none;
+}
