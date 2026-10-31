@@ -14,10 +14,10 @@
         <p @class(['eyebrow', 'justify-center' => $align === 'center', 'text-mist!' => $light])>{{ $eyebrow }}</p>
     @endif
     <h2 @class([
-        'mt-4 text-3xl leading-tight font-semibold sm:text-4xl lg:text-[2.75rem]',
+        'display mt-5 text-4xl italic sm:text-5xl lg:text-6xl',
         'text-white!' => $light,
     ])>{{ $title }}</h2>
     @if ($intro)
-        <p @class(['mt-5 text-lg leading-relaxed', 'text-white/75' => $light])>{{ $intro }}</p>
+        <p @class(['mt-6 text-lg leading-relaxed', 'text-white/70' => $light])>{{ $intro }}</p>
     @endif
 </div>

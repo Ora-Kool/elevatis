@@ -1,12 +1,12 @@
-<section id="newsletter" {{ $attributes->class(['section scroll-mt-24']) }}>
+<section id="newsletter" {{ $attributes->class(['section scroll-mt-24 bg-cloud']) }}>
     <div class="container-site">
-        <div class="relative overflow-hidden rounded-[2.5rem] bg-brand px-6 py-14 text-white sm:px-12 lg:px-20 lg:py-20" data-reveal>
+        <div class="relative overflow-hidden bg-brand px-6 py-16 text-white sm:px-12 lg:px-20 lg:py-24" data-reveal>
             <div aria-hidden="true" class="brand-mark pointer-events-none absolute -top-20 -right-10 size-96 bg-white/[0.07]"></div>
 
-            <div class="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div class="relative grid items-end gap-10 lg:grid-cols-2 lg:gap-16">
                 <div>
-                    <p class="eyebrow text-mist!">Abonnez-vous maintenant</p>
-                    <h2 class="mt-4 text-3xl leading-tight font-semibold text-white! sm:text-4xl">
+                    <p class="eyebrow text-mist!">Abonnez-vous</p>
+                    <h2 class="display mt-5 text-4xl text-white italic sm:text-5xl">
                         Recevez des conseils exclusifs en coaching de vie et développement personnel.
                     </h2>
                     <p class="mt-5 text-lg text-white/75">
@@ -16,7 +16,7 @@
 
                 <div>
                     @if (session('newsletter_success'))
-                        <div class="flex items-start gap-3 rounded-2xl bg-white/10 p-5 ring-1 ring-white/20" role="status">
+                        <div class="flex items-start gap-3 bg-white/10 p-5 ring-1 ring-white/20" role="status">
                             <x-icon name="check" class="mt-0.5 size-5" />
                             <p>{{ session('newsletter_success') }}</p>
                         </div>

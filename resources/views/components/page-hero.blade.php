@@ -2,47 +2,38 @@
     'eyebrow',
     'title',
     'intro' => null,
-    'image' => null,
+    'image' => asset('images/elevatis-sommet.jpg'),
     'imageAlt' => '',
 ])
 
-<section class="relative overflow-hidden bg-cloud">
-    <div aria-hidden="true" class="brand-mark pointer-events-none absolute -top-16 -right-20 size-[32rem] bg-brand/[0.05] lg:right-[8%]"></div>
+<section class="grain relative isolate overflow-x-clip bg-ink">
+    <img src="{{ $image }}" alt="{{ $imageAlt }}" width="1400" height="800" data-parallax="0.08"
+         class="absolute inset-0 -z-20 size-full scale-110 object-cover object-center">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/70 via-ink/55 to-ink"></div>
 
-    <div @class([
-        'container-site relative grid items-center gap-12 py-16 sm:py-20 lg:py-24',
-        'lg:grid-cols-2 lg:gap-16' => $image,
-    ])>
-        <div @class(['max-w-3xl', 'mx-auto text-center' => ! $image])>
-            <nav aria-label="Fil d’Ariane" @class(['mb-8 text-sm', 'flex justify-center' => ! $image])>
-                <ol class="flex items-center gap-2 text-slate-brand/70">
-                    <li><a href="{{ route('home') }}" class="transition hover:text-brand">Accueil</a></li>
-                    <li aria-hidden="true">/</li>
-                    <li class="font-medium text-ink" aria-current="page">{{ $eyebrow }}</li>
-                </ol>
-            </nav>
+    <div class="container-site relative flex min-h-[85svh] flex-col pt-28 pb-16 lg:pt-32 lg:pb-20">
+        <nav aria-label="Fil d’Ariane" class="text-sm text-white/55">
+            <ol class="flex items-center gap-2">
+                <li><a href="{{ route('home') }}" class="transition hover:text-white">Accueil</a></li>
+                <li aria-hidden="true">/</li>
+                <li class="text-white" aria-current="page">{{ $eyebrow }}</li>
+            </ol>
+        </nav>
 
-            <p class="eyebrow animate-fade-up">{{ $eyebrow }}</p>
-            <h1 class="mt-5 animate-fade-up text-4xl leading-[1.1] font-semibold [animation-delay:80ms] sm:text-5xl lg:text-6xl">
+        <div class="mt-auto max-w-5xl pt-16">
+            <p class="eyebrow text-mist!">{{ $eyebrow }}</p>
+            <h1 class="display mt-5 text-4xl text-white italic sm:text-6xl lg:text-7xl">
                 {{ $title }}
             </h1>
             @if ($intro)
-                <p class="mt-6 animate-fade-up text-lg leading-relaxed [animation-delay:160ms] sm:text-xl">{{ $intro }}</p>
+                <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 sm:text-xl">{{ $intro }}</p>
             @endif
 
             @isset($actions)
-                <div @class(['mt-10 flex animate-fade-up flex-wrap gap-4 [animation-delay:240ms]', 'justify-center' => ! $image])>
+                <div class="mt-10 flex flex-wrap gap-4">
                     {{ $actions }}
                 </div>
             @endisset
         </div>
-
-        @if ($image)
-            <div class="relative animate-fade-up [animation-delay:200ms]">
-                <div class="absolute -inset-4 -z-0 rotate-2 rounded-[2.5rem] bg-mist"></div>
-                <img src="{{ $image }}" alt="{{ $imageAlt }}" width="1024" height="680"
-                     class="relative aspect-[4/3] w-full rounded-[2rem] object-cover shadow-lift">
-            </div>
-        @endif
     </div>
 </section>

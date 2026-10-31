@@ -16,6 +16,10 @@ export default defineConfig({
                     weights: [500, 600],
                     preload: false,
                 }),
+                bunny('Cormorant Garamond', {
+                    weights: [400, 500, 600],
+                    styles: ['normal', 'italic'],
+                }),
             ],
         }),
         tailwindcss(),

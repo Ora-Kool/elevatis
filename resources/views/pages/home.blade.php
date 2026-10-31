@@ -1,111 +1,144 @@
 <x-layouts.app>
     {{-- Hero --}}
-    <section class="relative overflow-hidden bg-cloud">
-        <div aria-hidden="true" class="brand-mark pointer-events-none absolute -top-24 -left-32 size-[36rem] bg-brand/[0.05]"></div>
-
-        <div class="container-site relative grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-12 lg:gap-10 lg:py-28">
-            <div class="lg:col-span-6">
-                <p class="eyebrow animate-fade-up">Coach personnel · {{ config('elevatis.contact.city') }}</p>
-                <h1 class="mt-6 animate-fade-up text-[2.6rem] leading-[1.05] font-semibold [animation-delay:80ms] sm:text-6xl lg:text-[4.25rem]">
-                    Découvrez votre potentiel avec <span class="text-brand">Elevatis</span>
-                </h1>
-                <p class="mt-7 max-w-xl animate-fade-up text-lg leading-relaxed [animation-delay:160ms] sm:text-xl">
-                    Offrez-vous une vie épanouissante et pleine de sens grâce à nos services de coaching personnalisé.
-                </p>
-                <div class="mt-10 flex animate-fade-up flex-wrap gap-4 [animation-delay:240ms]">
-                    <a href="{{ route('services') }}" class="btn-primary">
-                        Découvrir nos services
-                        <x-icon name="arrow-right" class="size-4" />
-                    </a>
-                    <a href="{{ route('contact') }}" class="btn-secondary">Prendre rendez-vous</a>
+    @php $slides = config('elevatis.hero_slides'); @endphp
+    <section class="grain relative isolate flex h-[100svh] overflow-hidden bg-ink" data-hero data-hero-interval="6500">
+        <div class="absolute inset-0 -z-20" aria-hidden="true">
+            @foreach ($slides as $slide)
+                <div data-hero-slide @class(['hero-slide', 'is-active' => $loop->first])>
+                    <img src="{{ asset('images/'.$slide['image']) }}" alt="{{ $slide['alt'] }}"
+                         width="1400" height="800"
+                         @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif
+                         class="hero-slide-image {{ $slide['focus'] }}">
                 </div>
-
-                <dl class="mt-14 grid max-w-lg animate-fade-up grid-cols-2 gap-8 border-t border-ink/10 pt-8 [animation-delay:320ms]">
-                    <div>
-                        <dt class="text-sm">Séances de coaching</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-ink">9 800+</dd>
-                    </div>
-                    <div>
-                        <dt class="text-sm">Clients satisfaits</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-ink">96 %</dd>
-                    </div>
-                </dl>
-            </div>
-
-            <div class="relative lg:col-span-6">
-                <div class="relative animate-fade-up [animation-delay:200ms]">
-                    <div aria-hidden="true" class="absolute -inset-3 rotate-3 rounded-[2.75rem] bg-mist sm:-inset-5"></div>
-                    <img src="{{ asset('images/elevatis-seance-coaching.jpg') }}"
-                         alt="Séance de coaching personnalisé avec Elevatis" width="1024" height="678" fetchpriority="high"
-                         class="relative aspect-[5/4] w-full rounded-[2.25rem] object-cover shadow-lift">
-
-                    <div class="absolute -bottom-8 left-4 flex items-center gap-4 rounded-2xl bg-white p-4 pr-6 shadow-lift sm:-left-8">
-                        <span class="flex size-12 items-center justify-center rounded-xl bg-brand text-white">
-                            <x-icon name="heart" class="size-6" />
-                        </span>
-                        <span>
-                            <span class="block text-sm">Écoute active</span>
-                            <span class="block font-semibold text-ink">Un espace de confiance</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+        <div aria-hidden="true" class="hero-veil"></div>
+        <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/50 via-ink/35 to-ink"></div>
 
-    {{-- Partenaire --}}
-    <section class="section">
-        <div class="container-site">
-            <x-section-heading eyebrow="Votre partenaire" title="Pour une vie épanouissante et significative" />
-
-            <div class="mt-16 grid gap-6 md:grid-cols-3">
-                @foreach ([
-                    ['icon' => 'user', 'title' => 'Accompagnement personnalisé', 'text' => 'Un accompagnement sur mesure pour réaliser votre plein potentiel.'],
-                    ['icon' => 'shield-check', 'title' => 'Un environnement de confiance', 'text' => 'Un espace sécurisé pour explorer vos aspirations profondes.'],
-                    ['icon' => 'trending-up', 'title' => 'Un changement durable', 'text' => 'Nous encourageons l’autonomie et la responsabilisation pour des résultats qui durent.'],
-                ] as $pillar)
-                    <div class="card group hover:-translate-y-1 hover:shadow-lift" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms">
-                        <span class="flex size-14 items-center justify-center rounded-2xl bg-cloud text-brand transition group-hover:bg-brand group-hover:text-white">
-                            <x-icon :name="$pillar['icon']" class="size-7" />
-                        </span>
-                        <h3 class="mt-6 text-xl font-semibold">{{ $pillar['title'] }}</h3>
-                        <p class="mt-3 leading-relaxed">{{ $pillar['text'] }}</p>
+        <div class="container-site relative z-10 flex h-full flex-col pt-28 pb-8 sm:pb-10 lg:pt-32 lg:pb-12">
+            <div class="relative mt-auto w-full max-w-5xl">
+                @foreach ($slides as $slide)
+                    <div data-hero-copy @class(['hero-copy', 'is-active' => $loop->first])>
+                        <p class="eyebrow text-mist!">
+                            <span class="display text-base tracking-normal italic">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            {{ $slide['kicker'] }}
+                        </p>
+                        @if ($loop->first)
+                            <h1 class="display mt-5 text-4xl text-white italic sm:text-6xl lg:text-7xl">{{ $slide['title'] }}</h1>
+                        @else
+                            <p class="display mt-5 text-4xl text-white italic sm:text-6xl lg:text-7xl">{{ $slide['title'] }}</p>
+                        @endif
+                        <p class="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">{{ $slide['intro'] }}</p>
+                        <div class="mt-8 flex flex-wrap gap-4">
+                            <a href="{{ route($slide['cta_route'], $slide['cta_params']) }}" class="btn-light">
+                                {{ $slide['cta_label'] }}
+                                <x-icon name="arrow-right" class="size-4" />
+                            </a>
+                            <a href="{{ route('contact') }}" class="btn-ghost-light">Prendre rendez-vous</a>
+                        </div>
                     </div>
                 @endforeach
             </div>
+
+            <div class="mt-8 flex items-center justify-between gap-4 border-t border-white/15 pt-6">
+                <p class="hidden text-[11px] font-semibold tracking-[0.22em] text-white/50 uppercase sm:block">Glissez vers l’élévation</p>
+
+                <div class="flex items-center gap-4">
+                    <button type="button" data-hero-prev class="hero-nav-btn" aria-label="Image précédente">
+                        <x-icon name="arrow-right" class="size-4 rotate-180" />
+                    </button>
+                    <div class="flex items-center gap-2" role="tablist" aria-label="Images du hero">
+                        @foreach ($slides as $slide)
+                            <button type="button" data-hero-dot role="tab"
+                                    aria-label="{{ $slide['kicker'] }}"
+                                    aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                    @class(['hero-dot', 'is-active' => $loop->first])>
+                                <span class="hero-dot-progress"></span>
+                            </button>
+                        @endforeach
+                    </div>
+                    <button type="button" data-hero-next class="hero-nav-btn" aria-label="Image suivante">
+                        <x-icon name="arrow-right" class="size-4" />
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
-    {{-- Services --}}
+    {{-- Marquee --}}
+    <div class="overflow-hidden border-y border-ink/5 bg-white py-5" aria-hidden="true">
+        <div class="marquee-track flex w-max items-center gap-10 pr-10 text-[11px] font-semibold tracking-[0.28em] text-brand uppercase">
+            @foreach (array_merge(range(1, 2), []) as $pass)
+                @foreach (['Coaching de vie', 'Formation', 'Écoute active', 'Leadership', 'Développement personnel', 'Bien-être', 'Prenez de la hauteur', 'Sens'] as $word)
+                    <span class="flex items-center gap-10">
+                        <span>{{ $word }}</span>
+                        <span class="size-1.5 rounded-full bg-brand/40"></span>
+                    </span>
+                @endforeach
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Manifesto --}}
+    <section class="section bg-white">
+        <div class="container-site grid items-center gap-16 lg:grid-cols-12 lg:gap-20">
+            <div class="lg:col-span-6" data-reveal>
+                <p class="eyebrow">Votre partenaire</p>
+                <h2 class="display mt-5 text-4xl italic sm:text-5xl lg:text-6xl">Pour une vie épanouissante et significative</h2>
+                <p class="mt-8 text-lg leading-relaxed">
+                    Elevatis n’est pas un catalogue de séances. C’est un espace où l’on apprend à se voir clairement,
+                    à reprendre le pouvoir intérieur, puis à agir — avec discipline et avec sens.
+                </p>
+                <p class="mt-5 leading-relaxed">
+                    Un accompagnement sur mesure, un environnement de confiance, un changement qui tient dans le temps :
+                    nous encourageons l’autonomie et la responsabilisation.
+                </p>
+                <a href="{{ route('about') }}" class="btn-primary mt-10">
+                    Notre approche
+                    <x-icon name="arrow-right" class="size-4" />
+                </a>
+            </div>
+
+            <div class="relative lg:col-span-6" data-reveal style="--reveal-delay: 120ms">
+                <p class="display absolute -top-6 -left-2 z-10 text-[7rem] leading-none text-brand/10 italic lg:-left-10 lg:text-[9rem]">01</p>
+                <img src="{{ asset('images/elevatis-sommet.jpg') }}" alt="Prendre de la hauteur avec Elevatis"
+                     width="1400" height="800" class="relative aspect-[4/5] w-full object-cover object-[center_40%] sm:aspect-[4/3]">
+                <div class="absolute right-0 -bottom-8 max-w-[16rem] bg-brand p-6 text-white sm:-right-4">
+                    <p class="display text-4xl italic">9 800+</p>
+                    <p class="mt-2 text-sm text-white/75">Séances de coaching de vie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Services cinema --}}
     <section class="section bg-cloud">
         <div class="container-site">
             <div class="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-                <x-section-heading align="left" eyebrow="Nos services" title="Nos principaux services à valeur ajoutée" class="mx-0!" />
+                <x-section-heading align="left" eyebrow="Nos services" title="Trois chemins pour prendre de la hauteur" class="mx-0!" />
                 <a href="{{ route('services') }}" class="btn-secondary shrink-0" data-reveal>
                     Tous nos services
                     <x-icon name="arrow-right" class="size-4" />
                 </a>
             </div>
 
-            <div class="mt-14 grid gap-6 lg:grid-cols-3">
+            <div class="mt-16 divide-y divide-ink/10 border-y border-ink/10">
                 @foreach ([
-                    ['id' => 'coaching', 'icon' => 'sparkles', 'image' => 'elevatis-seance.jpg', 'title' => 'Coaching de vie', 'text' => 'Libérez votre potentiel en travaillant avec un coach de vie pour identifier vos objectifs et surmonter les obstacles personnels.'],
-                    ['id' => 'formation', 'icon' => 'academic-cap', 'image' => 'elevatis-formation.jpg', 'title' => 'Formation', 'text' => 'Transformez votre vie en explorant vos aspirations profondes et en atteignant vos objectifs personnels grâce à vos compétences.'],
-                    ['id' => 'ecoute', 'icon' => 'chat', 'image' => 'elevatis-ecoute.jpg', 'title' => 'Écoute active', 'text' => 'Développez des relations authentiques en maîtrisant l’art de l’écoute et en comprenant véritablement vos interlocuteurs.'],
+                    ['id' => 'coaching', 'n' => '01', 'title' => 'Coaching de vie', 'text' => 'Libérez votre potentiel en travaillant avec un coach de vie pour identifier vos objectifs et surmonter les obstacles personnels.', 'image' => 'elevatis-seance-coaching.jpg'],
+                    ['id' => 'formation', 'n' => '02', 'title' => 'Formation', 'text' => 'Transformez votre vie en explorant vos aspirations profondes et en atteignant vos objectifs personnels grâce à vos compétences.', 'image' => 'elevatis-formation.jpg'],
+                    ['id' => 'ecoute', 'n' => '03', 'title' => 'Écoute active', 'text' => 'Développez des relations authentiques en maîtrisant l’art de l’écoute et en comprenant véritablement vos interlocuteurs.', 'image' => 'elevatis-ecoute.jpg'],
                 ] as $service)
                     <a href="{{ route('services') }}#{{ $service['id'] }}"
-                       class="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift"
-                       data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms">
-                        <div class="relative aspect-[16/10] overflow-hidden">
+                       class="group grid items-center gap-8 py-10 lg:grid-cols-12 lg:gap-12 lg:py-14"
+                       data-reveal>
+                        <span class="display text-4xl text-brand/30 italic lg:col-span-1">{{ $service['n'] }}</span>
+                        <div class="overflow-hidden lg:col-span-4">
                             <img src="{{ asset('images/'.$service['image']) }}" alt="" loading="lazy"
-                                 class="size-full object-cover transition duration-700 group-hover:scale-105">
-                            <span class="absolute bottom-4 left-4 flex size-12 items-center justify-center rounded-xl bg-white text-brand shadow-soft">
-                                <x-icon :name="$service['icon']" class="size-6" />
-                            </span>
+                                 class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-[1.04]">
                         </div>
-                        <div class="flex flex-1 flex-col p-8">
-                            <h3 class="text-2xl font-semibold">{{ $service['title'] }}</h3>
-                            <p class="mt-3 flex-1 leading-relaxed">{{ $service['text'] }}</p>
+                        <div class="lg:col-span-7">
+                            <h3 class="display text-3xl italic sm:text-4xl">{{ $service['title'] }}</h3>
+                            <p class="mt-4 max-w-xl leading-relaxed">{{ $service['text'] }}</p>
                             <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand">
                                 En savoir plus
                                 <x-icon name="arrow-right" class="size-4 transition group-hover:translate-x-1" />
@@ -117,43 +150,59 @@
         </div>
     </section>
 
+    {{-- Four pillars --}}
+    <section class="section bg-white">
+        <div class="container-site">
+            <x-section-heading eyebrow="Les piliers de l’élévation" title="Conscience, responsabilité, discipline, sens"
+                               intro="Inspirés de notre guide « Reprendre le pouvoir sur sa vie », ces quatre piliers structurent chaque accompagnement." />
+
+            <ol class="mt-20 grid gap-px bg-ink/8 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ([
+                    ['title' => 'Conscience', 'text' => 'Voir clairement où vous en êtes — sans déni, sans dramatiser.'],
+                    ['title' => 'Responsabilité', 'text' => 'Reprendre le pouvoir intérieur : ce que vous pouvez décider, aujourd’hui.'],
+                    ['title' => 'Discipline', 'text' => 'Passer à l’action alignée, une décision à la fois, jusqu’à ce que ça tienne.'],
+                    ['title' => 'Sens', 'text' => 'Ancrer le changement dans ce qui compte vraiment pour vous.'],
+                ] as $pillar)
+                    <li class="bg-white p-8 sm:p-10" data-reveal style="--reveal-delay: {{ $loop->index * 80 }}ms">
+                        <span class="display text-5xl text-brand/20 italic">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        <h3 class="display mt-8 text-3xl italic">{{ $pillar['title'] }}</h3>
+                        <p class="mt-4 leading-relaxed">{{ $pillar['text'] }}</p>
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+    </section>
+
     {{-- Impact --}}
-    <section class="section">
-        <div class="container-site grid items-center gap-16 lg:grid-cols-2">
-            <div>
-                <x-section-heading align="left" eyebrow="Des résultats concrets" title="Mesurer l’impact"
+    <section class="grain relative overflow-hidden bg-ink py-24 text-white lg:py-32">
+        <div class="container-site relative">
+            <div class="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
+                <x-section-heading align="left" light eyebrow="Des résultats concrets" title="Mesurer l’impact"
                                    intro="Découvrez comment Elevatis transforme des vies et réalise des aspirations profondes." />
-                <div class="mt-10 flex flex-wrap gap-4" data-reveal>
-                    <a href="{{ route('testimonials') }}" class="btn-primary">
-                        Lire les témoignages
-                        <x-icon name="arrow-right" class="size-4" />
-                    </a>
-                </div>
+                <a href="{{ route('testimonials') }}" class="btn-light shrink-0" data-reveal>
+                    Lire les témoignages
+                    <x-icon name="arrow-right" class="size-4" />
+                </a>
             </div>
 
-            <dl class="grid grid-cols-2 gap-5">
+            <dl class="mt-16 grid grid-cols-2 gap-10 border-t border-white/15 pt-14 lg:grid-cols-4 lg:gap-8">
                 @foreach (config('elevatis.stats') as $stat)
-                    <div @class([
-                        'rounded-3xl p-8',
-                        'bg-brand text-white' => $loop->first,
-                        'bg-cloud' => ! $loop->first,
-                    ]) data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms">
-                        <dd @class(['text-4xl font-semibold tracking-tight sm:text-5xl', 'text-ink' => ! $loop->first])
+                    <div data-reveal style="--reveal-delay: {{ $loop->index * 90 }}ms">
+                        <dd class="display text-5xl text-white italic sm:text-6xl lg:text-7xl"
                             data-counter="{{ $stat['value'] }}" data-suffix="{{ $stat['suffix'] === '%' ? ' %' : $stat['suffix'] }}">
                             {{ number_format($stat['value'], 0, ',', ' ') }}{{ $stat['suffix'] === '%' ? ' %' : $stat['suffix'] }}
                         </dd>
-                        <dt @class(['mt-3 text-sm leading-snug', 'text-white/80' => $loop->first])>{{ $stat['label'] }}</dt>
+                        <dt class="mt-4 max-w-[12rem] text-sm leading-snug text-white/60">{{ $stat['label'] }}</dt>
                     </div>
                 @endforeach
             </dl>
         </div>
     </section>
 
-    {{-- Guide gratuit --}}
     <x-guide />
 
     {{-- Témoignages --}}
-    <section class="section">
+    <section class="section bg-white">
         <div class="container-site">
             <x-section-heading eyebrow="Témoignages" title="Ce qu’ils disent d’Elevatis"
                                intro="Découvrez ce que nos clients satisfaits ont à dire sur leur expérience avec Elevatis." />

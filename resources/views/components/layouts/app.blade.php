@@ -12,7 +12,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html lang="fr" class="no-js scroll-pt-28">
+<html lang="fr" @class(['no-js scroll-pt-28', 'has-cinematic-header' => request()->routeIs('home', 'about', 'services', 'pricing', 'testimonials', 'contact')])>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

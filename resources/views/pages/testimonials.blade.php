@@ -7,13 +7,13 @@
         title="Ce qu’ils disent d’Elevatis"
         intro="Découvrez ce que nos clients satisfaits ont à dire sur leur expérience avec Elevatis." />
 
-    <section class="section">
+    <section class="section bg-white">
         <div class="container-site">
             @php $testimonials = config('elevatis.testimonials'); @endphp
 
             <figure class="relative mx-auto max-w-4xl text-center" data-reveal>
-                <x-icon name="quote" class="mx-auto size-14 text-mist" />
-                <blockquote class="mt-8 text-2xl leading-snug font-medium text-ink sm:text-3xl lg:text-4xl">
+                <span class="display text-8xl leading-none text-brand/15 italic">“</span>
+                <blockquote class="display mt-4 text-3xl leading-snug text-ink italic sm:text-4xl lg:text-5xl">
                     «&nbsp;{{ $testimonials[0]['quote'] }}&nbsp;»
                 </blockquote>
                 <figcaption class="mt-10 flex items-center justify-center gap-4">
@@ -35,17 +35,17 @@
         </div>
     </section>
 
-    <section class="section bg-cloud">
+    <section class="grain relative overflow-hidden bg-ink py-24 text-white lg:py-32">
         <div class="container-site">
-            <x-section-heading eyebrow="Des résultats concrets" title="Elevatis transforme des vies" />
-            <dl class="mt-16 grid grid-cols-2 gap-5 lg:grid-cols-4">
+            <x-section-heading light eyebrow="Des résultats concrets" title="Elevatis transforme des vies" />
+            <dl class="mt-16 grid grid-cols-2 gap-10 border-t border-white/15 pt-14 lg:grid-cols-4">
                 @foreach (config('elevatis.stats') as $stat)
-                    <div class="rounded-3xl bg-white p-8 text-center shadow-soft" data-reveal style="--reveal-delay: {{ $loop->index * 100 }}ms">
-                        <dd class="text-4xl font-semibold tracking-tight text-brand sm:text-5xl"
+                    <div data-reveal style="--reveal-delay: {{ $loop->index * 90 }}ms">
+                        <dd class="display text-5xl text-white italic sm:text-6xl"
                             data-counter="{{ $stat['value'] }}" data-suffix="{{ $stat['suffix'] === '%' ? ' %' : $stat['suffix'] }}">
                             {{ number_format($stat['value'], 0, ',', ' ') }}{{ $stat['suffix'] === '%' ? ' %' : $stat['suffix'] }}
                         </dd>
-                        <dt class="mt-3 text-sm">{{ $stat['label'] }}</dt>
+                        <dt class="mt-4 text-sm text-white/60">{{ $stat['label'] }}</dt>
                     </div>
                 @endforeach
             </dl>

@@ -1,36 +1,18 @@
 @php
     $contact = config('elevatis.contact');
     $navigation = config('elevatis.navigation');
+    $cinematic = request()->routeIs('home', 'about', 'services', 'pricing', 'testimonials', 'contact');
 @endphp
 
-<div class="hidden bg-brand-dark text-white/80 lg:block">
-    <div class="container-site flex h-10 items-center justify-between text-[13px]">
-        <p class="flex items-center gap-2">
-            <x-icon name="map-pin" class="size-4 text-white/60" />
-            Coaching de vie, formation et écoute active · {{ $contact['city'] }}, {{ $contact['country'] }}
-        </p>
-        <div class="flex items-center gap-6">
-            <a href="mailto:{{ $contact['email'] }}" class="flex items-center gap-2 transition hover:text-white">
-                <x-icon name="mail" class="size-4 text-white/60" />
-                {{ $contact['email'] }}
-            </a>
-            <a href="tel:{{ $contact['phone_href'] }}" class="flex items-center gap-2 transition hover:text-white">
-                <x-icon name="phone" class="size-4 text-white/60" />
-                {{ $contact['phone'] }}
-            </a>
-        </div>
-    </div>
-</div>
-
-<header data-site-header class="sticky top-0 z-50 border-b border-transparent bg-white/95 backdrop-blur transition-all duration-300 data-scrolled:border-ink/5 data-scrolled:shadow-soft">
-    <div class="container-site flex h-20 items-center justify-between gap-6 lg:h-24">
+<header data-site-header @class(['sticky top-0 z-50 border-b border-transparent bg-white/90 backdrop-blur-md transition-all duration-500', 'is-cinematic' => $cinematic])>
+    <div class="container-site flex h-[4.5rem] items-center justify-between gap-6 lg:h-24">
         <a href="{{ route('home') }}" class="shrink-0" aria-label="Elevatis – Accueil">
             <img src="{{ asset('images/elevatis-logo.png') }}" alt="Elevatis – Commencez par prendre de la hauteur"
-                 width="364" height="200" class="h-16 w-auto lg:h-20">
+                 width="364" height="200" class="h-14 w-auto transition duration-500 lg:h-[4.5rem]">
         </a>
 
         <nav aria-label="Navigation principale" class="hidden lg:block">
-            <ul class="flex items-center gap-1 font-nav text-[15px] font-medium">
+            <ul class="flex items-center gap-0.5 font-nav text-[15px] font-medium">
                 @foreach ($navigation as $item)
                     @php $active = request()->routeIs($item['route']); @endphp
                     <li>
@@ -43,7 +25,7 @@
                            @if ($active) aria-current="page" @endif>
                             {{ $item['label'] }}
                             @if ($active)
-                                <span class="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand"></span>
+                                <span class="absolute inset-x-4 -bottom-0.5 h-px bg-brand"></span>
                             @endif
                         </a>
                     </li>
